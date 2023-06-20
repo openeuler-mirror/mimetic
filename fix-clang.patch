@@ -1,0 +1,12 @@
+diff -ur mimetic-0.9.8/configure mimetic-0.9.8/configure
+--- mimetic-0.9.8/configure	2014-06-17 16:26:30.000000000 +0800
++++ mimetic-0.9.8/configure	2023-06-19 21:00:03.967404768 +0800
+@@ -15106,7 +15106,7 @@
+   LDFLAGS="$LDFLAGS ${stlp_ldflags}"
+ fi
+ 
+-CXXFLAGS="$CXXFLAGS -DHAVE_MIMETIC_CONFIG"
++CXXFLAGS="$CXXFLAGS -Wno-reserved-user-defined-literal -DHAVE_MIMETIC_CONFIG"
+ CFLAGS="$CXXFLAGS"
+ 
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking STL required features" >&5

@@ -1,6 +1,6 @@
 Name:           mimetic
 Version:        0.9.8
-Release:        1
+Release:        2
 Summary:        A full featured C++ MIME library
 License:        MIT
 URL:            http://www.codesink.org/mimetic_mime_library.html
@@ -8,7 +8,9 @@ URL:            http://www.codesink.org/mimetic_mime_library.html
 Source0:        http://www.codesink.org/download/mimetic-%{version}.tar.gz
 Patch0:         mimetic-%{version}-signedness-fix.patch
 Patch1:         mimetic-gcc11.patch
-
+%if "%toolchain"=="clang"
+Patch2:         fix-clang.patch
+%endif
 BuildRequires:  gcc-c++
 BuildRequires:  doxygen
 BuildRequires:  findutils
@@ -41,8 +43,10 @@ developing applications that use %{name}.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
+export CFLAGS+="$CFLAGS -Wno-reserved-user-defined-literal"
 %configure --disable-static
 make %{?_smp_mflags}
 make docs -C doc
@@ -67,5 +71,8 @@ make check
 %{_libdir}/libmimetic.so
 
 %changelog
+* Mon Jun 19 2023 zhangxiang <zhangxiang@iscas.ac.cn> - 0.9.8-2
+- Fix clang build error
+
 * Mon Jul 25 2022 loong_C <loong_c@yeah.net> - 0.9.8-1
 - Initial Package.
